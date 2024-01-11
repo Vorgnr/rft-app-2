@@ -7,6 +7,7 @@ type AuthState = {
   email?: string,
   password?: string,
   error?: string,
+  // TODO type player
   player?: any,
   isLoading: boolean,
 }
