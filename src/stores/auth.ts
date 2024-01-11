@@ -1,4 +1,5 @@
 import api from '@/lib/api';
+import { toPlayer, type Player, type BackendPlayer } from '@/types/player';
 
 import { defineStore } from 'pinia';
 
@@ -7,8 +8,7 @@ type AuthState = {
   email?: string,
   password?: string,
   error?: string,
-  // TODO type player
-  player?: any,
+  player?: Player,
   isLoading: boolean,
 }
 
@@ -35,9 +35,9 @@ export const useAuthStore = defineStore('Auth', {
       this.error = error.toString();
     },
 
-    setPlayer(player: any) {
+    setPlayer(player: BackendPlayer) {
       this.isAuth = true;
-      this.player = player;
+      this.player = toPlayer(player);
     },
 
     clearAuth() {

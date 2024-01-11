@@ -1,126 +1,125 @@
 import api from '@/lib/api';
+import type { Match } from '@/types/match';
+import { defineStore } from 'pinia';
 
-const state = {
-  item: {},
-  list: [],
-  noMoreItems: false,
-};
+type MatchState = {
+  match?: Match,
+  list: Match[],
+  noMoreItems: boolean
+}
 
-const mutations = {
-  setList(s, list) {
-    s.list = list;
-    s.noMoreItems = !list.length;
-  },
-  appendToList(s, list) {
-    if (list.length) {
-      s.list = [...s.list, ...list];
-    } else {
-      s.noMoreItems = true;
+export const useLeagueStore = defineStore('Match', {
+  state(): MatchState {
+    return {
+      match: undefined,
+      list: [],
+      noMoreItems: false,
     }
   },
-  setItem(s, item) {
-    s.item = item;
-  },
-  updateItem(s, item) {
-    s.item = { ...s.item, ...item };
-  },
-};
 
-const callList = (obj) => {
-  const payload = {
-    method: 'GET',
-    params: obj.params,
-  };
+  actions: {
+    setList(list: Match[]) {
+      this.list = list;
+      this.noMoreItems = !list.length;
+    },
 
-  return api
-    .from('matches')
-    .request(payload);
-};
+    appendToList(list: Match[]) {
+      if (list.length) {
+        this.list = [...this.list, ...list];
+      } else {
+        this.noMoreItems = true;
+      }
+    },
 
-const actions = {
-  save(_, match) {
+    setMatch(match?: Match) {
+      this.match = match;
+    },
+
+    updateMatch(match: Match) {
+      this.match = { ...this.match, ...match };
+    },
+  
+  callList(obj) {
     const payload = {
-      method: 'POST',
-      data: match,
+      method: 'GET',
+      params: obj.params,
     };
+  
     return api
       .from('matches')
       .request(payload);
   },
-
-  async moderate({ commit }, { matchId }) {
-    const response = await api
-      .from('matches')
-      .put(`/${matchId}/moderate`);
-
-    commit('updateItem', response.data);
+  
+    save(match: Match) {
+      const payload = {
+        method: 'POST',
+        data: match,
+      };
+      return api
+        .from('matches')
+        .request(payload);
+    },
+  
+    async moderate(match: Pick<Match, 'id'>) {
+      const response = await api
+        .from('matches')
+        .put(`/${match.id}/moderate`);
+  
+      this.updateMatch(response.data);
+    },
+  
+    async unmoderate(match: Pick<Match, 'id'>) {
+      const response = await api
+        .from('matches')
+        .put(`/${match.id}/unmoderate`);
+  
+      this.updateMatch(response.data);
+    },
+  
+    clearMatch() {
+      this.setMatch();
+    },
+  
+    async penalize(body: Match) {
+      const response = await api
+        .from('matches')
+        .post(`/${body.id}/penalize`, {
+          player1_elo_penalty: body.player1_elo_penalty,
+          player2_elo_penalty: body.player2_elo_penalty,
+        });
+  
+      this.updateMatch(response.data);
+    },
+  
+    async cancel(match: Pick<Match, 'id'>) {
+      const response = await api
+        .from('matches')
+        .put(`/${match.id}/cancel`);
+  
+      this.updateMatch(response.data);
+    },
+  
+    async update(matchId: string, body: Partial<Match>) {
+      const response = await api
+        .from('matches')
+        .put(`/${matchId}`, body);
+  
+      this.updateMatch(response.data);
+    },
+  
+    async getById(match: Pick<Match, 'id'>) {
+      const response = await this.callList({ params: { matchId: match.id, perPage: 1 } });
+      this.setMatch(response.data[0]);
+    },
+  
+    async fetchMore(obj = {}) {
+      const response = await this.callList(obj);
+      this.appendToList(response.data);
+    },
+  
+    async fetchList(obj = {}) {
+      const response = await this.callList(obj);
+      this.setList(response.data);
+    },
   },
-
-  async unmoderate({ commit }, { matchId }) {
-    const response = await api
-      .from('matches')
-      .put(`/${matchId}/unmoderate`);
-
-    commit('updateItem', response.data);
-  },
-
-  clearMatch({ commit }) {
-    commit('setItem', {});
-  },
-
-  async penalize({ commit }, body) {
-    const response = await api
-      .from('matches')
-      .post(`/${body.matchId}/penalize`, {
-        player1_elo_penalty: body.player1_elo_penalty,
-        player2_elo_penalty: body.player2_elo_penalty,
-      });
-
-    commit('updateItem', response.data);
-  },
-
-  async cancel({ commit }, { matchId }) {
-    const response = await api
-      .from('matches')
-      .put(`/${matchId}/cancel`);
-
-    commit('updateItem', response.data);
-  },
-
-  async update({ commit }, { matchId, body }) {
-    const response = await api
-      .from('matches')
-      .put(`/${matchId}`, body);
-
-    commit('updateItem', response.data);
-  },
-
-  async getById({ commit }, { matchId }) {
-    const response = await callList({ params: { matchId, perPage: 1 } });
-    commit('setItem', response.data[0]);
-  },
-
-  async fetchMore({ commit }, obj = {}) {
-    const response = await callList(obj);
-    commit('appendToList', response.data);
-  },
-
-  async list({ commit }, obj = {}) {
-    const response = await callList(obj);
-    commit('setList', response.data);
-  },
-};
-
-const getters = {
-  list: (s) => s.list,
-  noMoreItems: (s) => s.noMoreItems,
-  item: (s) => s.item,
-};
-
-export default {
-  namespaced: true,
-  actions,
-  mutations,
-  state,
-  getters,
-};
+});

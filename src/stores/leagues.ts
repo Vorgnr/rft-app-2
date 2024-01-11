@@ -1,11 +1,11 @@
 import api from '@/lib/api';
+import type { League } from '@/types/league';
 import { defineStore } from 'pinia';
 
 type LeagueState = {
   isLazy: boolean,
-  list: any[],
-  // TODO league type
-  currentSelectedLeague: any
+  list: League[],
+  currentSelectedLeague: League
 }
 
 export const useLeagueStore = defineStore('League', {
@@ -19,44 +19,40 @@ export const useLeagueStore = defineStore('League', {
   },
 
   getters: {
-    currentLeagueId(): number {
-      return this.currentSelectedLeague.currentLeagueId
+    currentLeagueId(): string {
+      return this.currentSelectedLeague.id
     }
   },
 
   actions: {
-    setList(list) {
+    setList(list: League[]) {
       this.list = list;
       const [currentLeague] = list;
       if (currentLeague && !this.currentSelectedLeague) {
-        this.currentSelectedLeague = {
-          code: currentLeague.id,
-          label: currentLeague.name,
-          rankTreshold: currentLeague.rank_treshold,
-        };
+        this.currentSelectedLeague = currentLeague;
       }
     },
   
-    updateItem(league) {
-      const list = this.list.map((l) => {
+    updateItem(league: League) {
+      const list: League[] = this.list.map((l) => {
         if (l.id === league.id) {
-          return { ...l, ...league, isUpdated: false };
+          return { ...l, ...league };
         }
         return l;
       });
-      this.list = list;
+      this.list = list as League[];
     },
   
-    appendList(league) {
+    appendList(league: League) {
       this.list.push(league);
     },
   
-    setCurrentLeague(selectedLeague) {
+    setCurrentLeague(selectedLeague: League) {
       localStorage.currentSelectedLeague = JSON.stringify(selectedLeague);
       this.currentSelectedLeague = selectedLeague;
     },
 
-    async list(params = {}) {
+    async fetchList(params = {}) {
       const payload = {
         method: 'GET',
         params,
@@ -69,15 +65,15 @@ export const useLeagueStore = defineStore('League', {
       this.setList(response.data);
     },
   
-    async create({ body }) {
+    async create(league: League) {
       const response = await api
         .from('leagues')
-        .post('/', body);
+        .post('/', league);
   
       this.appendList(response.data);
     },
   
-    async update({ leagueId, body }) {
+    async update(leagueId: string, body: League) {
       const response = await api
         .from('leagues')
         .put(`/${leagueId}`, body);
@@ -86,7 +82,3 @@ export const useLeagueStore = defineStore('League', {
     },
   }
 });
-
-const mutations = {
-
-};
