@@ -1,0 +1,20 @@
+
+.form-control {
+  background-color: $dark;
+  color: $white;
+}
+
+.form-control:disabled {
+  background-color: #16303a;
+  cursor: not-allowed;
+}
+
+.form-control:focus {
+  background-color: $dark;
+  color: $white;
+  border-color: $secondary;
+}
+
+textarea.form-control {
+  height: 9em;
+}

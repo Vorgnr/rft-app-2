@@ -1,0 +1,78 @@
+.characters {
+  background-repeat: no-repeat;
+  height: 39px;
+  width: 61px;
+  background-position: -8px -8px;
+}
+
+@media (max-width: 576px) {
+  .characters {
+    background-position: -14px -8px;
+  }
+}
+
+.table {
+  td.character-thumbnail {
+    padding: 0;
+    padding-top: 0.2em;
+  }
+
+  div {
+    span.characters {
+      display:table-cell;
+      padding: 19px;
+    }
+  }
+} 
+
+.akuma { background-image: url(../assets/characters/akuma.jpg) }
+.alisa { background-image: url(../assets/characters/alisa.jpg) }
+.anna { background-image: url(../assets/characters/anna.jpg) }
+.armorking { background-image: url(../assets/characters/armorking.jpg) }
+.asuka { background-image: url(../assets/characters/asuka.jpg) }
+.bob { background-image: url(../assets/characters/bob.jpg) }
+.bryan { background-image: url(../assets/characters/bryan.jpg) }
+.claudio { background-image: url(../assets/characters/claudio.jpg) }
+.deviljin { background-image: url(../assets/characters/deviljin.jpg) }
+.dragunov { background-image: url(../assets/characters/dragunov.jpg) }
+.eddy { background-image: url(../assets/characters/eddy.jpg) }
+.eliza { background-image: url(../assets/characters/eliza.jpg) }
+.fahkumram { background-image: url(../assets/characters/fahkumram.png) }
+.feng { background-image: url(../assets/characters/feng.jpg) }
+.ganryu { background-image: url(../assets/characters/ganryu.png) }
+.geese { background-image: url(../assets/characters/geese.jpg) }
+.gigas { background-image: url(../assets/characters/gigas.jpg) }
+.heihachi { background-image: url(../assets/characters/heihachi.jpg) }
+.hwoarang { background-image: url(../assets/characters/hwoarang.jpg) }
+.jack { background-image: url(../assets/characters/jack.jpg) }
+.jin { background-image: url(../assets/characters/jin.jpg) }
+.josie { background-image: url(../assets/characters/josie.jpg) }
+.julia { background-image: url(../assets/characters/julia.jpg) }
+.king { background-image: url(../assets/characters/king.jpg) }
+.katarina { background-image: url(../assets/characters/katarina.jpg) }
+.kazumi { background-image: url(../assets/characters/kazumi.jpg) }
+.kazuya { background-image: url(../assets/characters/kazuya.jpg) }
+.kunimitsu { background-image: url(../assets/characters/kunimitsu.png) }
+.lars { background-image: url(../assets/characters/lars.jpg) }
+.law { background-image: url(../assets/characters/law.jpg) }
+.lee { background-image: url(../assets/characters/lee.jpg) }
+.lei { background-image: url(../assets/characters/lei.jpg) }
+.leo { background-image: url(../assets/characters/leo.jpg) }
+.leroy { background-image: url(../assets/characters/leroy.png) }
+.lidia { background-image: url(../assets/characters/lidia.png) }
+.lili { background-image: url(../assets/characters/lili.jpg) }
+.lucky { background-image: url(../assets/characters/lucky.jpg) }
+.marduk { background-image: url(../assets/characters/marduk.jpg) }
+.miguel { background-image: url(../assets/characters/miguel.jpg) }
+.nina { background-image: url(../assets/characters/nina.jpg) }
+.negan { background-image: url(../assets/characters/negan.jpg) }
+.noctis { background-image: url(../assets/characters/noctis.jpg) }
+.panda { background-image: url(../assets/characters/panda.jpg) }
+.paul { background-image: url(../assets/characters/paul.jpg) }
+.raven { background-image: url(../assets/characters/raven.jpg) }
+.shaheen { background-image: url(../assets/characters/shaheen.jpg) }
+.steve { background-image: url(../assets/characters/steve.jpg) }
+.xiaoyu { background-image: url(../assets/characters/xiaoyu.jpg) }
+.yoshimitsu { background-image: url(../assets/characters/yoshimitsu.jpg) }
+.zafina { background-image: url(../assets/characters/zafina.png) }
+.mokunjin { background-image: url(../assets/characters/mokunjin.png) }

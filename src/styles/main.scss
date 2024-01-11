@@ -1,0 +1,70 @@
+@import './bootswatch.solar.min.css';
+@import './variables.scss';
+
+@import './characters.scss';
+@import './form.scss';
+@import './tooltip.scss';
+@import './confirm.scss';
+@import './table.scss';
+
+body {
+  padding-top: 65px;
+}
+
+.main {
+  min-height: 91vh;
+}
+
+@media (min-width: 1200px) {
+  .container, .container-sm, .container-md, .container-lg, .container-xl {
+      max-width: 1298px;
+  }
+}
+
+td.winner {
+  background-color: rgba(42, 161, 152, 0.5);
+  color: #fff
+}
+
+td.loser {
+  background-color: rgba(203, 75, 22, 0.5);
+  color: #fff
+}
+
+td.borderl {
+  border-left: 1px solid $dark;
+}
+
+th.borderl {
+  border-left: 1px solid $dark;
+}
+
+.allignr {
+  text-align: right;
+}
+
+.icon {
+  width: 15px;
+}
+
+.icon.click {
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.jumbotron-small {
+  padding: 1.7em 2em;
+}
+
+a:not([href]) {
+  color: #2AA198;
+  cursor: pointer;
+}
+
+a:not([href]):hover {
+  color: #2AA198;
+  text-decoration: underline;
+}

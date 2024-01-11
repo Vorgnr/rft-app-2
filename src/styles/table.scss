@@ -1,0 +1,19 @@
+
+.table.table-condensed th, .table-condensed td {
+  padding: 0.45em;
+}
+@media (max-width: 992px) {
+  table {
+    overflow-x: auto;
+    display: block;
+  }
+
+  .table.table-condensed th, .table-condensed td {
+    padding: 0.30em;
+    vertical-align: middle;
+  }
+
+  .hidden-xs {
+    display: none;
+  }
+}
